@@ -3,21 +3,24 @@ import dash_bootstrap_components as dbc
 from dash_bootstrap_templates import load_figure_template
 import plotly.io as pio
 from prep_data import total_cert, year, month, fig1, fig2, fig3, table4, MAIN_COLOR
+from flask import Flask
 
 load_figure_template("lumen")
 pio.templates.default = "lumen+seaborn"
-app = Dash(__name__, 
-           external_stylesheets=[dbc.themes.LUMEN], 
-           title="DoHoangLam Certificates")
-server = app.server
+flask_server = Flask(__name__)
+dash_app = Dash(__name__,
+                server=flask_server,
+                external_stylesheets=[dbc.themes.LUMEN],
+                title="DoHoangLam Certificates")
+app = dash_app.server
 
 # Header
 header = html.Div([
     dbc.Row([
         dbc.Col([
-            html.H1("Do Hoang Lam", 
+            html.H1("Do Hoang Lam",
                     className='mx-2 mt-2',
-                    style={'font-size': '52px', 
+                    style={'font-size': '52px',
                            'color': MAIN_COLOR}),
             html.H4("Production Engineer", className='mx-2'),
             html.H6("Email: lamdohoang24@gmail.com", className='mx-2'),
@@ -30,19 +33,19 @@ header = html.Div([
         ], width=6),
         dbc.Col([
             html.Div([
-                html.Span(total_cert, 
+                html.Span(total_cert,
                           style={'font-size': '60px', 'color': MAIN_COLOR}),
-                html.Span(" Certificates", 
+                html.Span(" Certificates",
                           style={'font-size': '40px'})
             ], style={'textAlign': 'right'}, className='mx-2 mt-4'),
             html.Div([
-                html.Span("over ", 
+                html.Span("over ",
                           style={'font-size': '24px'}),
-                html.Span(f"{year} Years", 
+                html.Span(f"{year} Years",
                           style={'font-size': '38px', 'color': MAIN_COLOR}),
-                html.Span(" and ", 
+                html.Span(" and ",
                           style={'font-size': '24px'}),
-                html.Span(f"{month} Months", 
+                html.Span(f"{month} Months",
                           style={'font-size': '38px', 'color': MAIN_COLOR}),
             ], style={'textAlign': 'right'}),
         ], width=6),
@@ -53,21 +56,24 @@ header = html.Div([
 
 table_btn = html.Div([
     dbc.Button(html.Img(src='assets/table.png', height='20px'),
-               className="btn mx-1 mb-1", 
-               n_clicks=0, 
+               className="btn mx-1 mb-1",
+               n_clicks=0,
                id='table-button',
-               style={"float": "right", 'background-color': MAIN_COLOR, 'color': 'white'}
-        ),
-    ])
+               style={"float": "right",
+                      'background-color': MAIN_COLOR, 'color': 'white'}
+               ),
+])
 
 graph_data = dbc.Row([
     dbc.Col(
-        dcc.Graph(figure=fig1, id="graph_1", style={'height': '100%'}, config={'displayModeBar': False}),
+        dcc.Graph(figure=fig1, id="graph_1", style={
+                  'height': '100%'}, config={'displayModeBar': False}),
         width=8,
         style={'display': 'flex', 'flex-direction': 'column', 'height': '70vh'}
     ),
     dbc.Col([
-        dcc.Graph(figure=fig2, id="graph_2", style={'height': '50%'}, config={'displayModeBar': False}),
+        dcc.Graph(figure=fig2, id="graph_2", style={
+                  'height': '50%'}, config={'displayModeBar': False}),
         dcc.Graph(figure=fig3, id="graph_3", style={'height': '50%'}, config={'displayModeBar': False})],
         width=4,
         style={'display': 'flex', 'flex-direction': 'column', 'height': '70vh'})
@@ -81,10 +87,12 @@ graph = html.Div([
 ])
 
 # Layout
-app.layout = dbc.Container([header, graph], className='dbc', fluid=True)
+dash_app.layout = dbc.Container([header, graph], className='dbc', fluid=True)
 
 # Callback
-@app.callback(
+
+
+@dash_app.callback(
     Output("graph", "children"),
     Input('table-button', 'n_clicks')
 )
@@ -99,4 +107,4 @@ def swap(n):
 
 # Run
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    dash_app.run_server(debug=False)
