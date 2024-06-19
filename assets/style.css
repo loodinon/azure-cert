@@ -1,0 +1,19 @@
+body, p, div, span{
+    font-family: 'Bahnschrift', sans-serif;
+    color: 'rgb(30, 30, 30)'
+}
+
+h1, h2, h3{
+    font-family: 'Bahnschrift ExtraBold', sans-serif;
+}
+
+h4, h5, h6{
+    font-family: 'Bahnschrift SemiBold', sans-serif;
+}
+
+.ag-theme-alpine {
+    --ag-header-background-color: rgb(49,130,200);
+
+    --ag-font-size: 20px;
+    --ag-font-family: 'Bahnschrift';
+}
