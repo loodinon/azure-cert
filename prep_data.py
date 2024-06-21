@@ -1,8 +1,8 @@
 import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
-from datetime import datetime
 import dash_ag_grid as dag
+from datetime import datetime
 import pathlib
 
 
@@ -22,8 +22,7 @@ def get_content():
 
 df = get_content()
 
-df1 = df.groupby("Date").count()["Name"].reset_index().rename(
-    {"Name": "Count"}, axis=1)
+df1 = df.groupby("Date").count()["Name"].reset_index().rename({"Name": "Count"}, axis=1)
 total_cert = sum(df1["Count"])
 
 min_date = df1['Date'].min()
@@ -41,15 +40,18 @@ PLOT_TITLE_FONT = dict(
     family="Bahnschrift SemiCondensed",
     size=32
 )
+
 SUB_PLOT_TITLE_FONT = dict(
     family="Bahnschrift Condensed",
     size=24
 )
+
 HOVER_LABEL = dict(
     bgcolor="rgb(240,240,240)",
     font_size=16,
     font_family="Bahnschrift"
 )
+
 TICK_FONT = dict(
     family='Bahnschrift Light',
     color='rgb(82, 82, 82)',
@@ -148,8 +150,7 @@ fig1.update_traces(xaxis='x2')
 
 
 # FIG2 (group hbar)
-df2 = df.groupby("Group").count()["Name"].reset_index().rename(
-    {"Name": "Count"}, axis=1).sort_values(["Count"]).reset_index(drop=True)
+df2 = df.groupby("Group").count()["Name"].reset_index().rename({"Name": "Count"}, axis=1).sort_values(["Count"]).reset_index(drop=True)
 
 percentages = [val/sum(df2["Count"])*100 for val in df2["Count"]]
 threshold_percentage = 20
@@ -199,8 +200,7 @@ fig2.update_layout(
 
 # fig3 (org hbar)
 bound = 5
-df3 = df.groupby("Organization").count()[
-    "Name"].reset_index().rename({"Name": "Count"}, axis=1)
+df3 = df.groupby("Organization").count()["Name"].reset_index().rename({"Name": "Count"}, axis=1)
 less_than_10 = df3[df3['Count'] < bound]
 aggregated_row = pd.DataFrame(less_than_10.sum()).T
 aggregated_row.iloc[0, 0] = "Others"
@@ -215,8 +215,7 @@ fig3 = go.Figure(go.Bar(
     y=df3["Organization"],
     orientation='h',
     hoverinfo="x",
-    marker=dict(color=[MAIN_COLOR if perc >=
-                threshold_percentage else SUB_COLOR for perc in percentages])
+    marker=dict(color=[MAIN_COLOR if perc >=threshold_percentage else SUB_COLOR for perc in percentages])
 ))
 
 fig3.update_layout(
