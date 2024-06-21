@@ -2,7 +2,7 @@ from dash import Dash, dcc, html, Input, Output
 import dash_bootstrap_components as dbc
 from dash_bootstrap_templates import load_figure_template
 import plotly.io as pio
-from prep_data import total_cert, year, month, fig1, fig2, fig3, table4, MAIN_COLOR
+from prep_data import *
 from flask import Flask
 
 load_figure_template("lumen")
