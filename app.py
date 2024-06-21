@@ -1,13 +1,15 @@
 from dash import Dash, dcc, html, Input, Output
 import dash_bootstrap_components as dbc
 from dash_bootstrap_templates import load_figure_template
+from flask import Flask
 import plotly.io as pio
 from prep_data import *
-from flask import Flask
+
 
 load_figure_template("lumen")
 pio.templates.default = "lumen+seaborn"
 flask_server = Flask(__name__)
+
 dash_app = Dash(__name__,
                 server=flask_server,
                 external_stylesheets=[dbc.themes.LUMEN],
@@ -28,13 +30,15 @@ header = html.Div([
             html.H6([
                 html.Span("LinkedIn: "),
                 html.A("https://www.linkedin.com/in/loodinon/",
-                       href="https://www.linkedin.com/in/loodinon/", target='_blank')
+                       href="https://www.linkedin.com/in/loodinon/", 
+                       target='_blank')
             ], className='mx-2'),
         ], width=6),
         dbc.Col([
             html.Div([
                 html.Span(total_cert,
-                          style={'font-size': '60px', 'color': MAIN_COLOR}),
+                          style={'font-size': '60px', 
+                                 'color': MAIN_COLOR}),
                 html.Span(" Certificates",
                           style={'font-size': '40px'})
             ], style={'textAlign': 'right'}, className='mx-2 mt-4'),
@@ -42,11 +46,13 @@ header = html.Div([
                 html.Span("over ",
                           style={'font-size': '24px'}),
                 html.Span(f"{year} Years",
-                          style={'font-size': '38px', 'color': MAIN_COLOR}),
+                          style={'font-size': '38px', 
+                                 'color': MAIN_COLOR}),
                 html.Span(" and ",
                           style={'font-size': '24px'}),
                 html.Span(f"{month} Months",
-                          style={'font-size': '38px', 'color': MAIN_COLOR}),
+                          style={'font-size': '38px', 
+                                 'color': MAIN_COLOR}),
             ], style={'textAlign': 'right'}),
         ], width=6),
     ], justify="between"),
@@ -60,21 +66,29 @@ table_btn = html.Div([
                n_clicks=0,
                id='table-button',
                style={"float": "right",
-                      'background-color': MAIN_COLOR, 'color': 'white'}
+                      'background-color': MAIN_COLOR, 
+                      'color': 'white'}
                ),
 ])
 
 graph_data = dbc.Row([
     dbc.Col(
-        dcc.Graph(figure=fig1, id="graph_1", style={
-                  'height': '100%'}, config={'displayModeBar': False}),
+        dcc.Graph(figure=fig1, 
+                  id="graph_1", 
+                  style={'height': '100%'}, 
+                  config={'displayModeBar': False}),
         width=8,
         style={'display': 'flex', 'flex-direction': 'column', 'height': '70vh'}
     ),
     dbc.Col([
-        dcc.Graph(figure=fig2, id="graph_2", style={
-                  'height': '50%'}, config={'displayModeBar': False}),
-        dcc.Graph(figure=fig3, id="graph_3", style={'height': '50%'}, config={'displayModeBar': False})],
+        dcc.Graph(figure=fig2, 
+                  id="graph_2", 
+                  style={'height': '50%'}, 
+                  config={'displayModeBar': False}),
+        dcc.Graph(figure=fig3, 
+                  id="graph_3", 
+                  style={'height': '50%'}, 
+                  config={'displayModeBar': False})],
         width=4,
         style={'display': 'flex', 'flex-direction': 'column', 'height': '70vh'})
 ], style={'height': '70vh'})
@@ -86,12 +100,12 @@ graph = html.Div([
     html.Div(graph_data, id="graph")
 ])
 
+
 # Layout
 dash_app.layout = dbc.Container([header, graph], className='dbc', fluid=True)
 
+
 # Callback
-
-
 @dash_app.callback(
     Output("graph", "children"),
     Input('table-button', 'n_clicks')
