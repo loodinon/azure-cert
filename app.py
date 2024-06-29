@@ -38,15 +38,16 @@ header = html.Div([
                 html.Div(
                     dbc.Button(
                         html.Span([
-                            html.I(className="bi bi bi-github me-2"),
+                            html.I(className="bi bi-github me-2",
+                                   style={"font-size": "12px"}),
                             html.Span("Source Code",
-                                      style={'font-size': '15px'}
+                                      style={'font-size': '12px'}
                                       )
                         ]),
                         href="https://github.com/loodinon/azure-cert/",
                         target='_blank',
                         color='dark',
-                        className="pb-0"
+                        className="pb-0 px-2 pt-1"
                     ), className="my-1 d-grid d-md-flex justify-content-md-end")
             ),
             dbc.Row([
@@ -78,11 +79,12 @@ header = html.Div([
 
 table_btn = html.Div(
     dbc.Button(
-        html.I(className="bi bi bi-table"),
+        html.I(className="bi bi-table"),
         className="mx-1 mb-1 pb-0",
+        color="dark",
+        outline=True,
         n_clicks=0,
-        id='table-button',
-           style={'background-color': MAIN_COLOR}
+        id='table-button'
     ),
     className="d-grid d-md-flex justify-content-md-end"
 )
@@ -94,20 +96,21 @@ graph_data = dbc.Row([
                   style={'height': '100%'},
                   config={'displayModeBar': False}),
         width=9,
-        style={'display': 'flex', 'flex-direction': 'column', 'height': '70vh'}
+        style={'display': 'flex', 'flex-direction': 'column',
+               'height': CHART_HEIGHT}
     ),
     dbc.Col([
         dcc.Graph(figure=fig2,
                   id="graph_2",
-                  style={'height': '50%'},
+                  style={'height': '60%'},
                   config={'displayModeBar': False}),
         dcc.Graph(figure=fig3,
                   id="graph_3",
-                  style={'height': '50%'},
+                  style={'height': '40%'},
                   config={'displayModeBar': False})],
             width=3,
-            style={'display': 'flex', 'flex-direction': 'column', 'height': '70vh'})
-], style={'height': '70vh'}
+            style={'display': 'flex', 'flex-direction': 'column', 'height': CHART_HEIGHT})
+], style={'height': CHART_HEIGHT}
 )
 
 table_data = table4

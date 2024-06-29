@@ -12,8 +12,10 @@ h4, h5, h6{
 }
 
 .ag-theme-alpine {
-    --ag-header-background-color: rgb(49,130,200);
-
-    --ag-font-size: 20px;
+    --ag-font-size: 14px;
     --ag-font-family: 'Bahnschrift';
+}
+
+.ag-theme-alpine .ag-header {
+    font-size: 16px;
 }

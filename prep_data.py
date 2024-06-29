@@ -22,17 +22,21 @@ def get_content():
 
 df = get_content()
 
-df1 = df.groupby("Date").count()["Name"].reset_index().rename({"Name": "Count"}, axis=1)
+df1 = df.groupby("Date").count()["Name"].reset_index().rename(
+    {"Name": "Count"}, axis=1)
 total_cert = sum(df1["Count"])
 
 min_date = df1['Date'].min()
 max_date = datetime.today().date()
-month_diff = (max_date.year - min_date.year) * 12 + (max_date.month - min_date.month)
+month_diff = (max_date.year - min_date.year) * \
+    12 + (max_date.month - min_date.month)
 year = month_diff // 12
 month = month_diff - year * 12
 
 MAIN_COLOR = 'rgb(49,130,200)'
 SUB_COLOR = 'rgb(150,150,150)'
+
+CHART_HEIGHT = '74vh'
 
 AXIS_COLOR = 'rgb(204, 204, 204)'
 
@@ -97,7 +101,9 @@ fig1.add_trace(go.Scatter(
 
 fig1.update_layout(
     title=dict(
-        text=f"<span style='color:{MAIN_COLOR};'>Number of Certs</span> <span style='color:rgb(200,200,200);'> and </span> <span style='color:{SUB_COLOR};'>Cummulative Certs</span>",
+        text=f"<span style='color:{MAIN_COLOR};'>Number of Certs</span> <span \
+                style='color:rgb(170,170,170);'> and </span> <span \
+                style='color:{SUB_COLOR};'>Cummulative Certs</span>",
         x=0.03,
         y=0.99,
         font=PLOT_TITLE_FONT
@@ -150,10 +156,9 @@ fig1.update_traces(xaxis='x2')
 
 
 # FIG2 (group hbar)
-df2 = df.groupby("Group").count()["Name"].reset_index().rename({"Name": "Count"}, axis=1).sort_values(["Count"]).reset_index(drop=True)
+df2 = df.groupby("Group").count()["Name"].reset_index().rename(
+    {"Name": "Count"}, axis=1).sort_values(["Count"]).reset_index(drop=True)
 
-percentages = [val/sum(df2["Count"])*100 for val in df2["Count"]]
-threshold_percentage = 20
 fig2 = go.Figure(go.Bar(
     x=df2["Count"],
     y=df2["Group"],
@@ -182,12 +187,8 @@ fig2.update_layout(
         tickfont=TICK_FONT,
     ),
     yaxis=dict(
-        showline=True,
+        showline=False,
         showgrid=False,
-        showticklabels=True,
-        linecolor=AXIS_COLOR,
-        linewidth=2,
-        ticks='outside',
         tickfont=DARKER_TICK_FONT,
     ),
     xaxis_title="",
@@ -199,7 +200,8 @@ fig2.update_layout(
 
 # fig3 (org hbar)
 bound = 5
-df3 = df.groupby("Organization").count()["Name"].reset_index().rename({"Name": "Count"}, axis=1)
+df3 = df.groupby("Organization").count()[
+    "Name"].reset_index().rename({"Name": "Count"}, axis=1)
 less_than_10 = df3[df3['Count'] < bound]
 aggregated_row = pd.DataFrame(less_than_10.sum()).T
 aggregated_row.iloc[0, 0] = "Others"
@@ -207,8 +209,6 @@ df3 = df3[df3['Count'] >= bound]
 df3 = pd.concat([df3, aggregated_row], ignore_index=True)
 df3 = df3.sort_values(["Count"]).reset_index(drop=True)
 
-percentages = [val/sum(df3["Count"])*100 for val in df3["Count"]]
-threshold_percentage = 20
 fig3 = go.Figure(go.Bar(
     x=df3["Count"],
     y=df3["Organization"],
@@ -237,12 +237,8 @@ fig3.update_layout(
         tickfont=TICK_FONT,
     ),
     yaxis=dict(
-        showline=True,
+        showline=False,
         showgrid=False,
-        showticklabels=True,
-        linecolor=AXIS_COLOR,
-        linewidth=2,
-        ticks='outside',
         tickfont=DARKER_TICK_FONT,
     ),
     xaxis_title="",
@@ -256,7 +252,7 @@ fig3.update_layout(
 df4 = df.loc[:, ["Date", "Name_link", "Group", "Organization"]]
 df4["Date"] = df4["Date"].dt.strftime('%Y-%m')
 
-columnDefs = [
+column_defs = [
     {
         "headerName": "Date",
         "field": "Date",
@@ -286,9 +282,9 @@ columnDefs = [
 
 table4 = dag.AgGrid(
     rowData=df4.to_dict("records"),
-    columnDefs=columnDefs,
+    columnDefs=column_defs,
     defaultColDef={"sortable": True,
                    "filter": True,
                    "resizable": False},
-    style={"height": "70vh"}
+    style={"height": CHART_HEIGHT}
 )
