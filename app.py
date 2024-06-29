@@ -96,7 +96,8 @@ graph_data = dbc.Row([
                   style={'height': '100%'},
                   config={'displayModeBar': False}),
         width=9,
-        style={'display': 'flex', 'flex-direction': 'column',
+        style={'display': 'flex',
+               'flex-direction': 'column',
                'height': CHART_HEIGHT}
     ),
     dbc.Col([

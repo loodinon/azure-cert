@@ -105,12 +105,11 @@ fig1.update_layout(
                 style='color:rgb(170,170,170);'> and </span> <span \
                 style='color:{SUB_COLOR};'>Cummulative Certs</span>",
         x=0.03,
-        y=0.99,
+        y=1,
         font=PLOT_TITLE_FONT
     ),
-    margin=dict(
-        t=50,
-    ),
+    autosize=True,
+    margin=dict(l=10, r=10, t=50, b=45),
     xaxis2=dict(
         showline=True,
         showgrid=False,
@@ -171,12 +170,11 @@ fig2.update_layout(
     title=dict(
         text=f"<span style='color:{SUB_COLOR};'>By Topic</span>",
         x=0.03,
-        y=0.99,
+        y=1,
         font=SUB_PLOT_TITLE_FONT
     ),
-    margin=dict(
-        t=40,
-    ),
+    autosize=True,
+    margin=dict(l=0, r=10, t=40, b=0),
     xaxis=dict(
         showline=True,
         showgrid=False,
@@ -189,7 +187,11 @@ fig2.update_layout(
     yaxis=dict(
         showline=False,
         showgrid=False,
-        tickfont=DARKER_TICK_FONT,
+        tickfont=dict(
+            family='Bahnschrift',
+            size=10,
+            color='rgb(40, 40, 40)',
+        ),
     ),
     xaxis_title="",
     yaxis_title="",
@@ -221,12 +223,11 @@ fig3.update_layout(
     title=dict(
         text=f"<span style='color:{SUB_COLOR};'>By Organization</span>",
         x=0.03,
-        y=0.99,
+        y=1,
         font=SUB_PLOT_TITLE_FONT
     ),
-    margin=dict(
-        t=40,
-    ),
+    autosize=True,
+    margin=dict(l=130, r=10, t=40, b=0),
     xaxis=dict(
         showline=True,
         showgrid=False,
@@ -239,7 +240,11 @@ fig3.update_layout(
     yaxis=dict(
         showline=False,
         showgrid=False,
-        tickfont=DARKER_TICK_FONT,
+        tickfont=dict(
+            family='Bahnschrift',
+            size=12,
+            color='rgb(40, 40, 40)',
+        ),
     ),
     xaxis_title="",
     yaxis_title="",
