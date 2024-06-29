@@ -38,7 +38,7 @@ AXIS_COLOR = 'rgb(204, 204, 204)'
 
 PLOT_TITLE_FONT = dict(
     family="Bahnschrift SemiCondensed",
-    size=32
+    size=40
 )
 
 SUB_PLOT_TITLE_FONT = dict(
@@ -79,8 +79,8 @@ fig1 = make_subplots(rows=2, cols=1, shared_xaxes=True)
 fig1.add_trace(go.Scatter(
     x=[df_merged["Year"], df_merged["Month"]],
     y=df_merged["Count"],
-    line=dict(color=MAIN_COLOR, width=5),
-    name="# of Certs",
+    line=dict(color=MAIN_COLOR, width=6),
+    name="# Certs",
     hoverinfo='name+y',
 ),
     row=2, col=1
@@ -158,14 +158,13 @@ fig2 = go.Figure(go.Bar(
     x=df2["Count"],
     y=df2["Group"],
     orientation='h',
-    hoverinfo="x",
-    marker=dict(color=[MAIN_COLOR if perc >=
-                threshold_percentage else SUB_COLOR for perc in percentages])
+    hovertemplate='%{y}: %{x}<extra></extra>',
+    marker={"color": SUB_COLOR}
 ))
 
 fig2.update_layout(
     title=dict(
-        text=f"<span style='color:{MAIN_COLOR};'>By Topic</span>",
+        text=f"<span style='color:{SUB_COLOR};'>By Topic</span>",
         x=0.03,
         y=0.99,
         font=SUB_PLOT_TITLE_FONT
@@ -214,13 +213,13 @@ fig3 = go.Figure(go.Bar(
     x=df3["Count"],
     y=df3["Organization"],
     orientation='h',
-    hoverinfo="x",
-    marker=dict(color=[MAIN_COLOR if perc >=threshold_percentage else SUB_COLOR for perc in percentages])
+    hovertemplate='%{y}: %{x}<extra></extra>',
+    marker={"color": SUB_COLOR}
 ))
 
 fig3.update_layout(
     title=dict(
-        text=f"<span style='color:{MAIN_COLOR};'>By Organization</span>",
+        text=f"<span style='color:{SUB_COLOR};'>By Organization</span>",
         x=0.03,
         y=0.99,
         font=SUB_PLOT_TITLE_FONT
